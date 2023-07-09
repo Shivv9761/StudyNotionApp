@@ -32,7 +32,6 @@ exports.createSection = async (req,res)=>{
         .exec();
 
 
-        // HW to populate section and subsection details
         console.log(updatedCourse)
 
         return res.status(200).json({
@@ -54,47 +53,7 @@ exports.createSection = async (req,res)=>{
 
 
 
-// exports.updateSection = async (req,res)=>{
-//     try {
 
-//         // data input
-//         const {sectionName, sectionId}= req.body
-//         // validation
-//         if(!sectionName||!sectionId){
-//             res.status(400).json({
-//                 success:false,
-//                 message:"please send all the required information"
-//             })
-//         }
-
-//         // update
-
-//         const updatedSection= await Section.findByIdAndUpdate(
-//                                         sectionId,
-//                                         {
-//                                             sectionName:sectionName
-//                                                 },
-//                                                 {new:true}
-//         )
-
-//         // return response
-
-//         res.status(200).json({
-//             success:true,
-//             message:"section updated successfully",
-//             updatedSection
-//         })
-        
-//     } catch (error) {
-//         console.log(error)
-
-//         return res.status(500).json({
-//             success:false,
-//             message:"failed to update section",
-//             error:error
-//         })
-//     }
-// }
 
 exports.updateSection = async (req, res) => {
 	try {
@@ -130,31 +89,7 @@ exports.updateSection = async (req, res) => {
 
 
 
-// exports.deleteSection = async (req,res)=>{
-//     try {
-        
-//         const {sectionId}= req.body
 
-//         await Section.findByIdAndDelete({_id:sectionId})
-
-        
-//         res.status(200).json({
-//             success:true,
-//             message:"section deoeted successfully",
-            
-//         })
-
-
-//     } catch (error) {
-//         console.log(error)
-
-//         return res.status(500).json({
-//             success:false,
-//             message:"failed to delete section"
-//         })
-//     }
-    
-// }
 
 
 exports.deleteSection = async (req, res) => {
@@ -175,12 +110,10 @@ exports.deleteSection = async (req, res) => {
 			})
 		}
 
-		//delete sub section
 		await SubSection.deleteMany({_id: {$in: section.subSection}});
 
 		await Section.findByIdAndDelete(sectionId);
 
-		//find the updated course and return 
 		const course = await Course.findById(courseId).populate({
 			path:"courseContent",
 			populate: {
