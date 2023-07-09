@@ -11,83 +11,15 @@ const jwt = require("jsonwebtoken");
 const mailSender = require("../utils/mailSender");
 
 require("dotenv").config();
-// Send otp
 
-// exports.sendotp = async (req,res)=>{
-
-//     try {
-        
-//      const {email} = req.body;
-
-// 		const checkUserPresent = await User.findOne({ email });
-
-
-//     if(checkUserPresent){
-//         return res.status(401).json({
-//             success:false,
-//             message:"user already exist or registered"
-
-
-//         })
-//     }
-
-
-//         var otp = otpGenerator.generate(6,{
-//             upperCaseAlphabets:false,
-//             lowerCaseAlphabets:false,
-//             specialChars:false
-//         })
-
-//         console.log("otp generated",otp);
-
-//         let result = await OTP.findOne({otp: otp});
-
-//         while(result){
-//             otp=otpGenerator.generate(6,{
-//                 upperCaseAlphabets:false,
-//                 lowerCaseAlphabets:false,
-//                 specialChars:false
-//             })
-
-//             result = await OTP.findOne({otp:otp});
-
-//         }
-
-
-//         const otpPayload = {email, otp};
-
-//         const otpBody  = await OTP.create(otpPayload);
-
-//         console.log(otpBody);
-//         res.status(200).json({
-//             success:true,
-//             message:"otp sent successfully",
-//             otp
-//         })
-
-
-//     } catch (error) {
-        
-//         console.log(error)
-//         res.status(500).json({
-//             success:false,
-//             message:error.message
-//         })
-//     }
-
-// }
 exports.sendotp = async (req, res) => {
 	try {
 		const { email } = req.body;
 
-		// Check if user is already present
-		// Find user with provided email
+		
 		const checkUserPresent = await User.findOne({ email });
-		// to be used in case of signup
-
-		// If user found with provided email
+	
 		if (checkUserPresent) {
-			// Return 401 Unauthorized status code with error message
 			return res.status(401).json({
 				success: false,
 				message: `User is Already Registered`,
