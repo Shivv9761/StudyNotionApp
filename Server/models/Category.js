@@ -14,7 +14,6 @@ const categorySchema =new mongoose.Schema({
     [
 
         {
-            // here can be some error
             type:mongoose.Schema.Types.ObjectId,
             ref:"Course"
         }
