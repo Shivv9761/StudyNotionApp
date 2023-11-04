@@ -21,27 +21,10 @@ const OTPschema =new mongoose.Schema({
     }
 })
 
-// async function sendVerificationMail(email,otp){
-//     try {
-//         const res= await mailSender(email,'Verification mail from studynotion', otp)
-//         console.log("email send successfully",res);
-//     } catch (error) {
-//         console.log("error in otp model while sending email");
-//         throw error;
-//     }
-// }
 
-// OTPschema.pre('save',async function(next){
-//     await sendVerificationMail(this.email,this.otp);
-//     next();
-// })
 
 async function sendVerificationEmail(email, otp) {
-	// Create a transporter to send emails
-
-	// Define the email options
-
-	// Send the email
+	
 	try {
 		const mailResponse = await mailSender(
 			email,
@@ -55,11 +38,9 @@ async function sendVerificationEmail(email, otp) {
 	}
 }
 
-// Define a post-save hook to send email after the document has been saved
 OTPschema.pre("save", async function (next) {
 	console.log("New document saved to database");
 
-	// Only send an email when a new document is created
 	if (this.isNew) {
 		await sendVerificationEmail(this.email, this.otp);
 	}
